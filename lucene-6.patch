@@ -1,0 +1,29 @@
+--- a/lucene/lucene-directory/src/main/java/org/infinispan/lucene/impl/InfinispanIndexOutput.java.orig	2017-08-17 11:45:29.634976664 +0100
++++ b/lucene/lucene-directory/src/main/java/org/infinispan/lucene/impl/InfinispanIndexOutput.java	2017-08-17 11:45:52.027718876 +0100
+@@ -52,7 +52,8 @@
+    private int currentChunkNumber = 0;
+ 
+    public InfinispanIndexOutput(final AdvancedCache<FileCacheKey, FileMetadata> metadataCache, final AdvancedCache<ChunkCacheKey, Object> chunksCache, final FileCacheKey fileKey, final int bufferSize, final FileListOperations fileList,final int affinitySegmentId) {
+-      super("InfinispanIndexOutput{metadataCache=" + metadataCache + ", chunksCache=" + chunksCache + ", fileKey=" + fileKey + ", bufferSize=" + bufferSize + '}');
++      super("InfinispanIndexOutput{metadataCache=" + metadataCache + ", chunksCache=" + chunksCache + ", fileKey=" + fileKey + ", bufferSize=" + bufferSize + '}',
++              "InfinispanIndexOutput{metadataCache=" + metadataCache + ", chunksCache=" + chunksCache + ", fileKey=" + fileKey + ", bufferSize=" + bufferSize + '}');
+       this.metadataCache = metadataCache;
+       this.chunksCache = chunksCache;
+       this.affinitySegmentId = affinitySegmentId;
+--- a/lucene/lucene-directory/src/main/java/org/infinispan/lucene/impl/DirectoryLucene.java.orig	2017-08-17 11:51:02.271147311 +0100
++++ b/lucene/lucene-directory/src/main/java/org/infinispan/lucene/impl/DirectoryLucene.java	2017-08-17 12:34:22.778145803 +0100
+@@ -98,6 +98,14 @@
+     * {@inheritDoc}
+     */
+    @Override
++   public IndexOutput createTempOutput(final String prefix, final String suffix, final IOContext context) throws IOException {
++      throw new IOException("Unsupported operation");
++   }
++
++   /**
++    * {@inheritDoc}
++    */
++   @Override
+    public IndexInput openInput(final String name, final IOContext context) throws IOException {
+       final IndexInputContext indexInputContext = impl.openInput(name);
+       if (indexInputContext.readLocks == null) {
