@@ -1,16 +1,9 @@
-From: Build-team<buildteam@openeuler.org>
-Implement of abstract function extended from class Directory
---- lucene/lucene-directory/src/main/java/org/infinispan/lucene/impl/DirectoryLucene.java.orig	2016-08-11 15:23:06.000000000 +0000
-+++ lucene/lucene-directory/src/main/java/org/infinispan/lucene/impl/DirectoryLucene.java	2020-02-29 08:28:51.774738108 +0000
-@@ -59,6 +59,18 @@ class DirectoryLucene extends Directory
-       this.indexName = indexName;
-       this.lockFactory = lf;
-    }
-+   
-+   /**
-+    * {@inheritDoc}
-+    */
-+   @Override
+--- infinispan-8.2.4.Final/lucene/lucene-directory/src/main/java/org/infinispan/lucene/impl/DirectoryLucene.java.orig	2020-03-14 20:37:18.659307745 -0400
++++ infinispan-8.2.4.Final/lucene/lucene-directory/src/main/java/org/infinispan/lucene/impl/DirectoryLucene.java	2020-03-14 20:36:01.254296110 -0400
+@@ -64,6 +64,18 @@ class DirectoryLucene extends Directory
+     * {@inheritDoc}
+     */
+    @Override
 +   public void rename(String source,String dest) {}
 +
 +   /**
@@ -18,6 +11,11 @@ Implement of abstract function extended from class Directory
 +    */
 +   @Override
 +   public void syncMetaData() {}
- 
-    /**
-     * {@inheritDoc}
++
++   /**
++    * {@inheritDoc}
++    */
++   @Override
+    public void deleteFile(final String name) {
+       ensureOpen();
+       deleteExecutor.execute(new DeleteTask(name));
