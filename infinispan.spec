@@ -1,6 +1,6 @@
 Name:          infinispan
 Version:       8.2.4
-Release:       7
+Release:       8
 Summary:       Data grid platform
 License:       ASL 2.0 and LGPLv2+ and Public Domain
 URL:           http://infinispan.org/
@@ -37,7 +37,7 @@ BuildRequires: mvn(org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-bom:pom:)
 BuildRequires: mvn(org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec)
 BuildRequires: mvn(org.jboss.xnio:xnio-nio) mvn(org.jgroups:jgroups) >= 3.6.4
 BuildRequires: mvn(org.kohsuke.metainf-services:metainf-services) mvn(org.scala-lang:scala-compiler)
-BuildRequires: mvn(org.springframework:spring-context) mvn(org.wildfly.core:wildfly-controller)
+BuildRequires: mvn(org.wildfly.core:wildfly-controller)
 BuildRequires: mvn(org.wildfly.core:wildfly-core-parent:pom:)
 
 # Public Domain: ./commons/src/main/java/org/infinispan/commons/util/Base64.java
@@ -112,6 +112,7 @@ cp -pr license/src/main/resources/META-INF/LICENSE.txt.vm LICENSE.txt
 %pom_disable_module spring/spring4/spring4-common
 %pom_disable_module spring/spring4/spring4-embedded
 %pom_disable_module spring/spring4/spring4-remote
+%pom_disable_module spring/spring
 
 %pom_xpath_set pom:properties/pom:version.jboss.logging.processor 1 parent
 
@@ -218,5 +219,8 @@ done
 %license LICENSE.txt
 
 %changelog
+* Tue Dec 22 2020 wangxiao<wangxiao65@huawei.com> - 8.2.4-8
+- remove dependence of springframework-context
+
 * Tue Mar 10 2020 xuxijian<xuxijian@huawei.com> - 8.2.4-7
 - Package init
