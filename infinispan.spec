@@ -1,6 +1,6 @@
 Name:          infinispan
 Version:       8.2.4
-Release:       7
+Release:       8
 Summary:       Data grid platform
 License:       ASL 2.0 and LGPLv2+ and Public Domain
 URL:           http://infinispan.org/
@@ -9,6 +9,9 @@ Source0:       https://github.com/infinispan/infinispan/archive/8.2.4.Final/infi
 # Port to lucene 6.x
 Patch0:        lucene-6.patch
 Patch1:        implement-abstract-functions-extended-from-class-Directory.patch
+Patch2:        CVE-2016-0750.patch
+Patch3:        CVE-2017-15089-1.patch
+Patch4:        CVE-2017-15089-2.patch
 
 BuildRequires: maven-local mvn(com.clearspring.analytics:stream) mvn(com.mchange:c3p0)
 BuildRequires: mvn(commons-logging:commons-logging) mvn(commons-pool:commons-pool)
@@ -218,5 +221,8 @@ done
 %license LICENSE.txt
 
 %changelog
+* Thu Mar 4 2021 zhanghua<zhanghua40@huawei.com> - 8.2.4-8
+- fix CVE-2016-0750 CVE-2017-15089
+
 * Tue Mar 10 2020 xuxijian<xuxijian@huawei.com> - 8.2.4-7
 - Package init
