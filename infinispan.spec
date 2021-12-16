@@ -1,6 +1,6 @@
 Name:          infinispan
 Version:       8.2.4
-Release:       8
+Release:       9
 Summary:       Data grid platform
 License:       ASL 2.0 and LGPLv2+ and Public Domain
 URL:           http://infinispan.org/
@@ -221,6 +221,9 @@ done
 %license LICENSE.txt
 
 %changelog
+* Thu Dec 16 2021 wangkai <wangkai385@huawei.com> - 8.2.4-9
+- This package depends on log4j.After the log4j vulnerability CVE-2021-44228 is fixed,the version needs to be rebuild.
+
 * Thu Mar 4 2021 zhanghua<zhanghua40@huawei.com> - 8.2.4-8
 - fix CVE-2016-0750 CVE-2017-15089
 
