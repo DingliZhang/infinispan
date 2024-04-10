@@ -1,6 +1,7 @@
+%global bootstrap       1
 Name:          infinispan
 Version:       8.2.4
-Release:       11
+Release:       12
 Summary:       Data grid platform
 License:       ASL 2.0 and LGPLv2+ and Public Domain
 URL:           http://infinispan.org/
@@ -40,8 +41,11 @@ BuildRequires: mvn(org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-bom:pom:)
 BuildRequires: mvn(org.jboss.spec.javax.transaction:jboss-transaction-api_1.1_spec)
 BuildRequires: mvn(org.jboss.xnio:xnio-nio) mvn(org.jgroups:jgroups) >= 3.6.4
 BuildRequires: mvn(org.kohsuke.metainf-services:metainf-services) mvn(org.scala-lang:scala-compiler)
-BuildRequires: mvn(org.springframework:spring-context) mvn(org.wildfly.core:wildfly-controller)
+%if ! %{bootstrap}
+BuildRequires: mvn(org.springframework:spring-context)
+BuildRequires: mvn(org.wildfly.core:wildfly-controller)
 BuildRequires: mvn(org.wildfly.core:wildfly-core-parent:pom:)
+%endif
 
 # Public Domain: ./commons/src/main/java/org/infinispan/commons/util/Base64.java
 Provides:      bundled(java-base64) = 4.2
@@ -111,6 +115,9 @@ cp -pr license/src/main/resources/META-INF/LICENSE.txt.vm LICENSE.txt
 %pom_disable_module server/rest
 %pom_disable_module tck-runner jcache
 
+%if %{bootstrap}
+%pom_disable_module spring/spring
+%endif
 %pom_disable_module spring/spring4
 %pom_disable_module spring/spring4/spring4-common
 %pom_disable_module spring/spring4/spring4-embedded
@@ -207,7 +214,9 @@ done
 %mvn_alias :infinispan-directory-provider org.hibernate:hibernate-search-infinispan
 
 %build
-
+%if "%{_arch}" == "riscv64"
+export JAVA_TOOL_OPTIONS="-Xmx4096m"
+%endif
 %mvn_build -f
 
 %install
@@ -221,6 +230,9 @@ done
 %license LICENSE.txt
 
 %changelog
+* Wed Apr 10 2024 Dingli Zhang <dingli@iscas.ac.cn> - 8.2.4-12
+- breaking spring dependency cycle for first build
+
 * Wed Nov 9 2022 liyanan <liyanan32@h-partners.com>  - 8.2.4-11
 - Change source
 
